@@ -1,57 +1,57 @@
-const Post = require('../models/posts_model');
-
+const postsService = require('../services/posts_service');
+const {handleError} = require("../utils/handle_error");
 
 exports.addPost = async (req, res) => {
     try {
-        const newPost = new Post(req.body);
-        const savedPost = await newPost.save();
+        const savedPost = await postsService.addPost(req.body);
         res.status(201).json(savedPost);
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        handleError(err, res);
     }
 };
 
 exports.getPosts = async (req, res) => {
     try {
         let posts;
-        // To return a post by sender
         if (req.query.sender) {
-            posts = await Post.find({sender: req.query.sender});
-        }
-        // To return all posts
-        else {
-            posts = await Post.find();
+            posts = await postsService.getPosts(req.query.sender);
+        } else {
+            posts = await postsService.getPosts();
         }
 
         if (posts.length === 0) {
-            return res.status(204).json({ message: 'No posts found' });
+            res.status(204).json({ message: 'No posts found' });
+        } else {
+            res.json(posts);
         }
-
-        res.json(posts);
-
-
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        handleError(err, res);
     }
 };
 
-
 exports.getPostById = async (req, res) => {
     try {
-        const post = await Post.findById(req.params.post_id);
-        if (!post) return res.status(404).json({ message: 'Post not found' });
-        res.json(post);
+        const post = await postsService.getPostById(req.params.post_id);
+        if (!post) {
+            res.status(404).json({ message: 'Post not found' });
+        } else {
+            res.json(post);
+        }
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        handleError(err, res);
     }
 };
 
 exports.updatePost = async (req, res) => {
     try {
-        const updatedPost = await Post.findByIdAndUpdate(req.params.post_id, req.body, { new: true });
-        if (!updatedPost) return res.status(404).json({ message: 'Post not found' });
-        res.json(updatedPost);
+        const postData = {title: req.body.title, content: req.body.content};
+        const updatedPost = await postsService.updatePost(req.params.post_id, postData);
+        if (!updatedPost) {
+            res.status(404).json({ message: 'Post not found' });
+        } else {
+            res.json(updatedPost);
+        }
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        handleError(err, res);
     }
 };

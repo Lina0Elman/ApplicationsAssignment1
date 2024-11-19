@@ -4,6 +4,6 @@ module.exports = {
         baseName: process.env.BASE_NAME || ''
     },
     db: {
-        uri: process.env.MONGO_URI
+        uri: process.env.MONGO_URI || 'mongodb://localhost:27017'
     }
 };
