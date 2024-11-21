@@ -1,17 +1,23 @@
 ###
+# Posts
+###
 
+# Fetch all posts
 GET http://localhost:3000/posts
 
 ###
 
+# Fetch posts by owner
 GET http://localhost:3000/posts?owner=Eliav
 
 ###
 
+# Fetch a post by ID
 GET http://localhost:3000/posts/673ce3fb333717eb08c19b5d
 
 ###
 
+# Add a new post
 POST http://localhost:3000/posts
 Content-Type: application/json
 
@@ -23,8 +29,7 @@ Content-Type: application/json
 
 ###
 
-###
-
+# Update a post
 PUT http://localhost:3000/posts/673ce3fb333717eb08c19b5d
 Content-Type: application/json
 
@@ -35,6 +40,7 @@ Content-Type: application/json
 
 ###
 
+# Partially update a post (title)
 PATCH http://localhost:3000/posts/673ce3fb333717eb08c19b5d
 Content-Type: application/json
 
@@ -44,6 +50,7 @@ Content-Type: application/json
 
 ###
 
+# Partially update a post (content)
 PATCH http://localhost:3000/posts/673ce3fb333717eb08c19b5d
 Content-Type: application/json
 
@@ -52,3 +59,40 @@ Content-Type: application/json
 }
 
 ###
+# Comments
+###
+
+# Add a comment to a post
+POST http://localhost:3000/comments
+Content-Type: application/json
+
+{
+  "postId": "673ce3fb333717eb08c19b5d",
+  "content": "This is a comment on this post.",
+  "author": "Shir"
+}
+
+###
+
+# Fetch all comments
+GET http://localhost:3000/comments
+
+###
+
+# Fetch comments for a specific post
+GET http://localhost:3000/comments/673ce3fb333717eb08c19b5d
+
+###
+
+# Update a comment
+PUT http://localhost:3000/comments/123ce3fb333717eb08c19b5e
+Content-Type: application/json
+
+{
+  "content": "Updated comment content"
+}
+
+###
+
+# Delete a comment
+DELETE http://localhost:3000/comments/123ce3fb333717eb08c19b5e
