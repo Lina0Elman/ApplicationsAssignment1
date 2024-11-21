@@ -1,21 +1,18 @@
-###
+#########
 # Posts
-###
+#########
 
 # Fetch all posts
 GET http://localhost:3000/posts
 
-###
 
 # Fetch posts by owner
 GET http://localhost:3000/posts?owner=Eliav
 
-###
 
 # Fetch a post by ID
 GET http://localhost:3000/posts/673ce3fb333717eb08c19b5d
 
-###
 
 # Add a new post
 POST http://localhost:3000/posts
@@ -27,28 +24,25 @@ Content-Type: application/json
   "content": "Hello World...!!!"
 }
 
-###
 
 # Update a post
 PUT http://localhost:3000/posts/673ce3fb333717eb08c19b5d
 Content-Type: application/json
 
 {
-    "title": "Updated Title",
-    "content": "Updated content..."
+  "title": "Updated Title",
+  "content": "Updated content..."
 }
 
-###
 
 # Partially update a post (title)
 PATCH http://localhost:3000/posts/673ce3fb333717eb08c19b5d
 Content-Type: application/json
-
+ 
 {
-    "title": "Partially Updated Title"
+  "title": "Partially Updated Title"
 }
 
-###
 
 # Partially update a post (content)
 PATCH http://localhost:3000/posts/673ce3fb333717eb08c19b5d
@@ -58,41 +52,37 @@ Content-Type: application/json
   "content": "Partially Updated content"
 }
 
-###
+#########
 # Comments
-###
+#########
 
 # Add a comment to a post
 POST http://localhost:3000/comments
 Content-Type: application/json
 
 {
-  "postId": "673ce3fb333717eb08c19b5d",
+  "postId": "673f32d5c7efa1d3038e5f48",
   "content": "This is a comment on this post.",
-  "author": "Shir"
+  "author": "Lina"
 }
 
-###
 
 # Fetch all comments
 GET http://localhost:3000/comments
 
-###
 
 # Fetch comments for a specific post
-GET http://localhost:3000/comments/673ce3fb333717eb08c19b5d
+GET http://localhost:3000/comments?postId=673f32d5c7efa1d3038e5f48
 
-###
 
 # Update a comment
-PUT http://localhost:3000/comments/123ce3fb333717eb08c19b5e
+PUT http://localhost:3000/comments/673f3676df31ecd45d3fd457
 Content-Type: application/json
 
 {
   "content": "Updated comment content"
 }
 
-###
 
 # Delete a comment
-DELETE http://localhost:3000/comments/123ce3fb333717eb08c19b5e
+DELETE http://localhost:3000/comments/673f3676df31ecd45d3fd457
