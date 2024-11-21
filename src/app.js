@@ -10,8 +10,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-const commentsRoutes = require('./routes/comments');
-
 app.use('/comments', commentsRoutes);
 app.use("/posts", postsRoute);
 
