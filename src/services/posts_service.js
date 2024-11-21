@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const Post = require('../models/posts_model');
 
 exports.addPost = async (postData) => {
@@ -21,7 +20,3 @@ exports.getPostById = async (postId) => {
 exports.updatePost = async (postId, postData) => {
     return Post.findByIdAndUpdate(postId, {...postData}, {new: true, runValidators:true});
 };
-
-exports.isValidationErrors = (err) => {
-    return err instanceof mongoose.Error.ValidationError;
-}

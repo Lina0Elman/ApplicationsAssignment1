@@ -1,4 +1,4 @@
-const {isValidationErrors} = require ("../services/posts_service");
+const {isValidationErrors} = require ("../utils/utils");
 
 exports.handleError = (err, res) => {
     if (isValidationErrors(err)) {
