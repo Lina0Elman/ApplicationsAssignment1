@@ -6,8 +6,8 @@
 GET http://localhost:3000/posts
 
 
-# Fetch posts by owner
-GET http://localhost:3000/posts?owner=Eliav
+# Fetch posts by sender
+GET http://localhost:3000/posts?sender=Eliav
 
 
 # Fetch a post by ID
