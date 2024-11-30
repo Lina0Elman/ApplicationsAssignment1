@@ -1,8 +1,17 @@
 const commentsService = require('../services/comments_service');
+const postsService = require('../services/posts_service');
 const { handleError } = require("../utils/handle_error");
 
 exports.addComment = async (req, res) => {
     try {
+        const { postId } = req.body;
+
+        // Validate if the post exists
+        const postExists = await postsService.getPostById(postId);
+        if (!postExists) {
+            return res.status(404).json({ message: "Post not found: " + postId });
+        }
+
         const savedComment = await commentsService.addComment(req.body);
         res.status(201).json(savedComment);
     } catch (err) {
