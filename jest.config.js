@@ -193,6 +193,9 @@ const config = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
+
+  testTimeout: 10000,
+  testMatch: ["**/?(*.)+(spec|test).ts"]
 };
 
 module.exports = config;
