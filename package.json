@@ -7,7 +7,7 @@
     "dev": "nodemon index.js",
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-mongo": "node dev/start-mongo.js"
+    "start-local-mongo": "node dev/start-mongo.js"
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,7 @@
 const express = require("express");
-const postsRoute = require('./routes/posts_route');
+
+const commentsRoutes = require('./routes/comments_routes');
+const postsRoutes = require('./routes/posts_routes');
 
 const app = express();
 
@@ -8,6 +10,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-app.use("/posts", postsRoute);
+app.use('/comments', commentsRoutes);
+app.use("/posts", postsRoutes);
 
 module.exports = app;
