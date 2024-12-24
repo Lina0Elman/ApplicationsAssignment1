@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     app: {
         port: process.env.PORT || 3000,
         baseName: process.env.BASE_NAME || ''

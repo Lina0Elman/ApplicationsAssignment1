@@ -1,13 +1,12 @@
-const app = require('./src/app');
-const dotenv = require('dotenv');
-const connectToDatabase = require('./src/db');
-const config = require('./src/config/config');
-
+import app from './src/app';
+import * as dotenv from 'dotenv';
+import {connectToDatabase} from './src/db';
+import config from './src/config/config';
 
 // Initialize environment variables
 dotenv.config();
 
-const startServer = async () => {
+const startServer = async () : Promise<void> => {
     await connectToDatabase(config.db.uri);
 
     app.listen(config.app.port, () => {
