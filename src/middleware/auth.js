@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 
+// todo - use it for all requests except for addUser? (which is like registeration)
 const authenticateToken = (req, res, next) => {
   const token = req.headers['authorization']?.split(' ')[1];
 

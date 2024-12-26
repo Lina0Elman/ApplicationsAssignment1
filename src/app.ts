@@ -1,6 +1,7 @@
 import express from 'express';
 import commentsRoutes from './routes/comments_routes';
 import postsRoutes from './routes/posts_routes';
+import usersRoutes from './routes/users_routes';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 
@@ -28,5 +29,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/comments', commentsRoutes);
 app.use('/posts', postsRoutes);
+app.use('/users', usersRoutes);
 
 export default app;

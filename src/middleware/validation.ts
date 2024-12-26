@@ -9,3 +9,9 @@ export const validateComment = [
 export const validateCommentId = [
     param('comment_id').isMongoId().withMessage('Invalid comment ID'),
 ];
+
+
+// todo
+export const validateEmail = () => {
+
+}
