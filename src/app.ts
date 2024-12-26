@@ -12,7 +12,7 @@ const options = {
             version: '1.0.0',
         },
     },
-    apis: ['./routes/*.ts']
+    apis: ['./src/routes/*.ts']
 };
 
 const specs = swaggerJsdoc(options);
