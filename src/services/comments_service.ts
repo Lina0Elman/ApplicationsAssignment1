@@ -11,6 +11,12 @@ export const addComment = async (commentData: CommentData): Promise<IComment> =>
     return await comment.save();
 };
 
+export const getCommentsWithAuthorsByPostId = async (postId: string): Promise<IComment[]> => {
+    return await CommentModel.find({ postId })
+        .populate('author', 'username email') // Fetch user details for the comment author
+        .exec();
+};
+
 export const getCommentsByPostId = async (postId: string): Promise<IComment[]> => {
     return await CommentModel.find({ postId }).exec();
 };

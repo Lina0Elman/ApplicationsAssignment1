@@ -1,4 +1,27 @@
 #########
+# Users #
+#########
+
+
+# Fetch all users
+GET http://localhost:3000/users
+###
+
+
+
+# Add a new user
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "username": "linlin",
+  "email": "linel@gmail.com",
+  "password": "123"
+}
+###
+
+
+#########
 # Posts #
 #########
 
@@ -8,7 +31,7 @@ GET http://localhost:3000/posts
 ###
 
 # Fetch posts by sender
-GET http://localhost:3000/posts?sender=Tibi
+GET http://localhost:3000/posts?sender=676dc7e0044fc263e9ab31ba
 ###
 
 # Fetch a post by ID
@@ -21,7 +44,7 @@ Content-Type: application/json
 
 {
   "title": "Hello",
-  "owner": "Tibi",
+  "owner": "676dc7e0044fc263e9ab31ba",
   "content": "Hello World...!!!"
 }
 ###
