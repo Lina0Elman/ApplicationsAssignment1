@@ -1,4 +1,5 @@
-const { exec } = require('child_process');
+
+import { exec } from 'child_process';
 
 exec('docker inspect mongo', (err, stdout, stderr) => {
     if (!err) {

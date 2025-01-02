@@ -1,8 +1,12 @@
-const {isValidationErrors} = require ("../utils/utils");
+import { Response } from 'express';
+import {isValidationErrors} from "./utils";
+import {ValidationError} from "types/validation_errors";
 
-exports.handleError = (err, res) => {
+
+
+export const handleError = (err: any, res: Response) => {
     if (isValidationErrors(err)) {
-        const errors = Object.keys(err.errors).map(field => ({
+        const errors: ValidationError[] = Object.keys(err.errors).map(field => ({
             field,
             message: err.errors[field].message,
             value: err.errors[field].value

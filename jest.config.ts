@@ -3,8 +3,10 @@
  * https://jestjs.io/docs/configuration
  */
 
+import { Config } from '@jest/types';
+
 /** @type {import('jest').Config} */
-const config = {
+const config: Config.InitialOptions = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -193,6 +195,9 @@ const config = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
+
+  testTimeout: 10000,
+  testMatch: ["**/?(*.)+(spec|test).ts"]
 };
 
 module.exports = config;
