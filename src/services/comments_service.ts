@@ -1,10 +1,7 @@
-import {CommentModel , IComment } from '../models/comments_model';
+import {CommentModel } from '../models/comments_model';
+import { IComment } from './comment_types';
+import { CommentData } from 'types/comment_data';
 
-interface CommentData {
-    postId: string;
-    content: string;
-    author: string;
-}
 
 export const addComment = async (commentData: CommentData): Promise<IComment> => {
     const comment = new CommentModel(commentData);

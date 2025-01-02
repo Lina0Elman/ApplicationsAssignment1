@@ -1,12 +1,6 @@
 import mongoose, { Document, Schema } from 'mongoose';
+import { IComment } from '../services/comment_types';
 
-export interface IComment extends Document {
-    postId: mongoose.Schema.Types.ObjectId;
-    content: string;
-    author: string;
-    createdAt?: Date;
-    updatedAt?: Date;
-}
 
 const commentSchema: Schema = new mongoose.Schema({
     postId: {

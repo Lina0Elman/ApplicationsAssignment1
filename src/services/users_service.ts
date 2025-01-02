@@ -1,10 +1,8 @@
-import {UserModel, IUser } from '../models/user_model';
+import {UserModel } from '../models/user_model';
+import { IUser } from './user_types';
+import { UserData } from 'types/user_data';
 
-interface UserData {
-    username: string;
-    email: string;
-    password: string;
-}
+
 
 export const addUser = async (userData: UserData): Promise<IUser> => {
     const newUser = new UserModel(userData);

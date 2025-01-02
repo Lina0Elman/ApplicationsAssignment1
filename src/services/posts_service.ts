@@ -1,10 +1,7 @@
-import {PostModel, IPost } from '../models/posts_model';
+import {PostModel } from '../models/posts_model';
+import { IPost } from './post_types';
+import { PostData } from 'types/post_data';
 
-interface PostData {
-    title: string;
-    content: string;
-    owner: string;
-}
 
 export const addPost = async (postData: PostData): Promise<IPost> => {
     const newPost = new PostModel(postData);

@@ -1,10 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
-
-export interface IPost extends Document {
-    title: string;
-    content?: string;
-    owner: mongoose.Schema.Types.ObjectId;
-}
+import { IPost } from '../services/post_types';
 
 const postSchema: Schema = new mongoose.Schema({
     title: {

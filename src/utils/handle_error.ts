@@ -1,12 +1,8 @@
 import { Response } from 'express';
 import {isValidationErrors} from "./utils";
+import {ValidationError} from "types/validation_errors";
 
 
-export interface ValidationError {
-    field: string;
-    message: string;
-    value: any;
-}
 
 export const handleError = (err: any, res: Response) => {
     if (isValidationErrors(err)) {
