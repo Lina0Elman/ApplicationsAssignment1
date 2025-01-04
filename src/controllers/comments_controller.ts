@@ -1,15 +1,17 @@
-const commentsService = require('../services/comments_service');
-const postsService = require('../services/posts_service');
-const { handleError } = require("../utils/handle_error");
+import { Request, Response } from 'express';
+import * as commentsService from '../services/comments_service';
+import * as postsService from '../services/posts_service';
+import { handleError } from '../utils/handle_error';
 
-exports.addComment = async (req, res) => {
+export const addComment = async (req: Request, res: Response): Promise<void> => {
     try {
         const { postId } = req.body;
 
         // Validate if the post exists
         const postExists = await postsService.getPostById(postId);
         if (!postExists) {
-            return res.status(404).json({ message: "Post not found: " + postId });
+            res.status(404).json({ message: "Post not found: " + postId });
+            return;
         }
 
         const savedComment = await commentsService.addComment(req.body);
@@ -19,7 +21,7 @@ exports.addComment = async (req, res) => {
     }
 };
 
-exports.getCommentsByPostId = async (req, res) => {
+export const getCommentsByPostId = async (req: Request, res: Response): Promise<void> => {
     try {
         const comments = await commentsService.getCommentsByPostId(req.params.post_id);
         if (comments.length === 0) {
@@ -32,7 +34,7 @@ exports.getCommentsByPostId = async (req, res) => {
     }
 };
 
-exports.getAllComments = async (req, res) => {
+export const getAllComments = async (req: Request, res: Response): Promise<void> => {
     try {
         const comments = await commentsService.getAllComments();
         res.json(comments);
@@ -41,7 +43,7 @@ exports.getAllComments = async (req, res) => {
     }
 };
 
-exports.updateComment = async (req, res) => {
+export const updateComment = async (req: Request, res: Response): Promise<void> => {
     try {
         const updatedComment = await commentsService.updateComment(req.params.comment_id, req.body);
         if (!updatedComment) {
@@ -54,7 +56,7 @@ exports.updateComment = async (req, res) => {
     }
 };
 
-exports.deleteComment = async (req, res) => {
+export const deleteComment = async (req: Request, res: Response): Promise<void> => {
     try {
         const deletedComment = await commentsService.deleteComment(req.params.comment_id);
         if (!deletedComment) {
