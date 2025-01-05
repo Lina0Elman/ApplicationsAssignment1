@@ -5,3 +5,9 @@ export interface IPost extends Document {
     content?: string;
     owner: mongoose.Schema.Types.ObjectId;
 }
+
+export interface PostData {
+    title: string;
+    content: string;
+    owner: string;
+}

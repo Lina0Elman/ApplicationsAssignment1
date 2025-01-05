@@ -1,7 +1,5 @@
 import {PostModel } from '../models/posts_model';
-import { IPost } from './post_types';
-import { PostData } from 'types/post_data';
-
+import { IPost, PostData } from '../types/post_types';
 
 export const addPost = async (postData: PostData): Promise<IPost> => {
     const newPost = new PostModel(postData);

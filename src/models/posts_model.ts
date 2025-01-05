@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import { IPost } from '../services/post_types';
+import { IPost } from '../types/post_types';
 
 const postSchema: Schema = new mongoose.Schema({
     title: {

@@ -7,3 +7,9 @@ export interface IComment extends Document {
     createdAt?: Date;
     updatedAt?: Date;
 }
+
+export interface CommentData {
+    postId: string;
+    content: string;
+    author: string;
+}

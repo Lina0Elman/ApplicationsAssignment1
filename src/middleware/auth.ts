@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import config from '../config/config';
+import { CustomRequest } from '../types/customRequest';
 
-// Middleware to authenticate token for all requests except for addUser (registration)
-const authenticateToken = (req: Request, res: Response, next: NextFunction): void => {
+// Middleware to authenticate token for all requests
+const authenticateToken = (req: CustomRequest, res: Response, next: NextFunction): void => {
   const token = req.headers['authorization']?.split(' ')[1];
 
   if (!token) {
