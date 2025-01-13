@@ -17,7 +17,7 @@ const commentSchema: Schema = new mongoose.Schema({
         required: true,
         ref: "User"
     },
-}, { timestamps: true });
+}, { timestamps: true, strict: true });
 
 commentSchema.set('toJSON', {
     transform: (doc: Document, ret: Record<string, any>) => {

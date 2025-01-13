@@ -1,0 +1,148 @@
+import express, { Request, Response, Router } from 'express';
+import * as authController from '../controllers/auth_controller';
+
+const router: Router = express.Router();
+
+/**
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     summary: Login a user
+ *     tags:
+ *       - Auth
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: The email of the user
+ *               password:
+ *                 type: string
+ *                 description: The password of the user
+ *     responses:
+ *       200:
+ *         description: User logged in successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 accessToken:
+ *                   type: string
+ *                   description: The access token
+ *                 refreshToken:
+ *                   type: string
+ *                   description: The refresh token
+ *       400:
+ *         description: Validation error
+ *       401:
+ *         description: Invalid credentials
+ */
+router.post('/login', (req: Request, res: Response) => authController.loginUser(req, res));
+
+/**
+ * @swagger
+ * /auth/logout:
+ *   post:
+ *     summary: Logout a user
+ *     tags:
+ *       - Auth
+ *     security:
+ *      - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *                 description: The refresh token
+ *     responses:
+ *       200:
+ *         description: User logged out successfully
+ *       400:
+ *         description: Validation error
+ */
+router.post('/logout', (req: Request, res: Response) => authController.logoutUser(req, res));
+
+/**
+ * @swagger
+ * /auth/register:
+ *   post:
+ *     summary: Register a new user
+ *     tags:
+ *       - Auth
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 description: The username of the user
+ *               email:
+ *                 type: string
+ *                 description: The email of the user
+ *               password:
+ *                 type: string
+ *                 description: The password of the user
+ *     responses:
+ *       201:
+ *         description: User registered successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Success message
+ *       400:
+ *         description: Validation error
+ */
+router.post('/register', (req: Request, res: Response) => authController.registerUser(req, res));
+
+/**
+ * @swagger
+ * /auth/refresh-token:
+ *   post:
+ *     summary: Refresh the access token
+ *     tags:
+ *       - Auth
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *                 description: The refresh token
+ *     responses:
+ *       200:
+ *         description: New access token generated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 accessToken:
+ *                   type: string
+ *                   description: The new access token
+ *       400:
+ *         description: Invalid refresh token
+ *       401:
+ *         description: Unauthorized
+ */
+router.post('/refresh-token', (req: Request, res: Response) => authController.refreshToken(req, res));
+
+export default router;
