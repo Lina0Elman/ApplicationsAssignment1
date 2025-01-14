@@ -8,7 +8,11 @@ export interface IUser extends Document {
 
 
 export interface UserData {
+    id: string;
     username: string;
     email: string;
-    password: string;
+    createdAt?: string,
+    updatedAt?: string,
 }
+
+
