@@ -195,7 +195,13 @@ const config: Config.InitialOptions = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
+  transform: {
+    '^.+\\.ts$': 'ts-jest',
+  },
 
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  
   testTimeout: 10000,
   testMatch: ["**/?(*.)+(spec|test).ts"]
 };

@@ -45,3 +45,30 @@ export const getUserById = async (req: Request, res: Response): Promise<void> =>
     }
 }
 
+
+export const updateUserById = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const user = await usersService.updateUserById(req.params.id, req.body);
+        if (!user) {
+            res.status(404).json({ message: 'User not found' });
+            return;
+        }
+        res.json(user);
+    } catch (err) {
+        handleError(err, res);
+    }
+}
+
+
+export const deleteUserById = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const user = await usersService.deleteUserById(req.params.id);
+        if (!user) {
+            res.status(404).json({ message: 'User not found' });
+            return;
+        }
+        res.json({ message: 'User deleted successfully' });
+    } catch (err) {
+        handleError(err, res);
+    }
+}

@@ -27,3 +27,7 @@ export const updateComment = async (commentId: string, commentData: Partial<Comm
 export const deleteComment = async (commentId: string): Promise<IComment | null> => {
     return await CommentModel.findByIdAndDelete(commentId).exec();
 };
+
+export const getCommentById = async (commentId: string): Promise<IComment | null> => {
+    return await CommentModel.findById(commentId).exec();
+};

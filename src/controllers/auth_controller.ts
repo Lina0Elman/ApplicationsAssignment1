@@ -33,7 +33,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
     try {
         const { username, password, email } = req.body;
         const savedUser = await usersService.registerUser(username, password, email);
-        res.status(201).json(`Registered user ${username} with id: ${savedUser.id}`);
+        res.status(201).json(savedUser);
     } catch (err) {
         handleError(err, res);
     }
