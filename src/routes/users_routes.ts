@@ -35,4 +35,12 @@ const router: Router = express.Router();
  */
 router.get('/', (req: Request, res: Response) => usersController.getUsers(req, res));
 
+
+
+router.get('/:id', (req: Request, res: Response) => usersController.getUserById(req, res));
+
+router.delete('/:id', (req: Request, res: Response) => usersController.deleteUserById(req, res));
+
+router.put('/:id', (req: Request, res: Response) => usersController.updateUserById(req, res));
+
 export default router;

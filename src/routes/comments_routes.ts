@@ -79,6 +79,7 @@ router.get('/', (req: Request, res: Response) => commentsController.getAllCommen
  *         description: Invalid post ID
  */
 router.get('/:post_id', (req: Request, res: Response) => commentsController.getCommentsByPostId(req, res));
+router.get('/:commentId', (req: Request, res: Response) => commentsController.getCommentById(req, res));
 
 /**
  * @swagger
