@@ -1,5 +1,11 @@
 import express, { Request, Response, Router } from 'express';
 import * as authController from '../controllers/auth_controller';
+import {
+    handleValidationErrors,
+    validateLogin,
+    validateRefreshToken,
+    validateUserRegister
+} from "../middleware/validation";
 
 const router: Router = express.Router();
 
@@ -42,7 +48,7 @@ const router: Router = express.Router();
  *       401:
  *         description: Invalid credentials
  */
-router.post('/login', (req: Request, res: Response) => authController.loginUser(req, res));
+router.post('/login', validateLogin, handleValidationErrors, (req: Request, res: Response) => authController.loginUser(req, res));
 
 /**
  * @swagger
@@ -108,7 +114,7 @@ router.post('/logout', (req: Request, res: Response) => authController.logoutUse
  *       400:
  *         description: Validation error
  */
-router.post('/register', (req: Request, res: Response) => authController.registerUser(req, res));
+router.post('/register', validateUserRegister, handleValidationErrors, (req: Request, res: Response) => authController.registerUser(req, res));
 
 /**
  * @swagger
@@ -143,6 +149,6 @@ router.post('/register', (req: Request, res: Response) => authController.registe
  *       401:
  *         description: Unauthorized
  */
-router.post('/refresh-token', (req: Request, res: Response) => authController.refreshToken(req, res));
+router.post('/refresh-token', validateRefreshToken, handleValidationErrors, (req: Request, res: Response) => authController.refreshToken(req, res));
 
 export default router;

@@ -1,6 +1,6 @@
 import express, { Request, Response, Router } from 'express';
 import * as commentsController from '../controllers/comments_controller';
-import { validateComment, validateCommentId } from '../middleware/validation';
+import {handleValidationErrors, validateComment, validateCommentId} from '../middleware/validation';
 
 const router: Router = express.Router();
 
@@ -25,7 +25,7 @@ const router: Router = express.Router();
  *       400:
  *         description: Validation error
  */
-router.post('/', validateComment, (req: Request, res: Response) => commentsController.addComment(req, res));
+router.post('/', validateComment, handleValidationErrors, (req: Request, res: Response) => commentsController.addComment(req, res));
 
 /**
  * @swagger
@@ -111,7 +111,7 @@ router.get('/:commentId', (req: Request, res: Response) => commentsController.ge
  *       404:
  *         description: Comment not found
  */
-router.put('/:comment_id', validateCommentId, (req: Request, res: Response) => commentsController.updateComment(req, res));
+router.put('/:comment_id', validateCommentId, handleValidationErrors, (req: Request, res: Response) => commentsController.updateComment(req, res));
 
 /**
  * @swagger
@@ -135,6 +135,6 @@ router.put('/:comment_id', validateCommentId, (req: Request, res: Response) => c
  *       404:
  *         description: Comment not found
  */
-router.delete('/:comment_id', validateCommentId, (req: Request, res: Response) => commentsController.deleteComment(req, res));
+router.delete('/:comment_id', validateCommentId, handleValidationErrors, (req: Request, res: Response) => commentsController.deleteComment(req, res));
 
 export default router;

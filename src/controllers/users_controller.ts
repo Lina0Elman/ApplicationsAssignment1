@@ -3,6 +3,7 @@ import * as usersService from '../services/users_service';
 import { handleError } from '../utils/handle_error';
 import bcrypt from 'bcrypt';
 import * as config from '../config/config'
+import {registerUser} from "./auth_controller";
 
 // export const addUser = async (req: Request, res: Response): Promise<void> => {
 //     try {
@@ -15,6 +16,10 @@ import * as config from '../config/config'
 //         handleError(err, res);
 //     }
 // };
+
+export const createUser = async (req: Request, res: Response): Promise<void> => {
+   await registerUser(req, res);
+};
 
 export const getUsers = async (req: Request, res: Response): Promise<void> => {
     try {

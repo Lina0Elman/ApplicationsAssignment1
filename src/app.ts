@@ -18,8 +18,8 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
 app.use(authenticateToken.unless({ path: ['/auth/login', '/auth/register', '/auth/refresh-token'] }));
+
 
 app.use('/auth', authRoutes);
 app.use('/comments', commentsRoutes);

@@ -4,6 +4,7 @@ import {handleError} from "../utils/handle_error";
 import {RefreshTokenModel} from "../models/refresh_token_model";
 import jwt from "jsonwebtoken";
 import config from "../config/config";
+import { body, validationResult } from 'express-validator';
 
 export const loginUser = async (req: Request, res: Response): Promise<void> => {
     try {

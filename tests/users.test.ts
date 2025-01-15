@@ -2,7 +2,7 @@ import request from 'supertest';
 import app from '../src/app';
 import mongoose, { ConnectOptions } from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import { UserModel } from '../src/models/user_model';
+
 
 let mongoServer: MongoMemoryServer;
 
@@ -19,12 +19,14 @@ afterAll(async () => {
     await mongoServer.stop();
 });
 
-beforeEach(async () => {
-    // Clean the database before each test
-    await mongoose.connection.db?.dropDatabase();
-});
 
 describe('Users API Tests', () => {
+
+    beforeEach(async () => {
+        // Clean the database before each test
+        await mongoose.connection.db?.dropDatabase();
+    });
+
     test('Register a new user', async () => {
         const response = await request(app)
             .post('/auth/register')
@@ -145,5 +147,70 @@ describe('Users API Tests', () => {
 
         expect(response.status).toBe(200);
         expect(response.body.message).toBe('User deleted successfully');
+    });
+});
+
+describe('Create User API Tests', () => {
+    let accessToken: string;
+
+    beforeAll(async () => {
+        await request(app)
+            .post('/auth/register')
+            .send({
+                username: 'TestAdmin',
+                email: 'testadmin@example.com',
+                password: 'adminpassword123',
+            });
+
+        const loginResponse = await request(app)
+            .post('/auth/login')
+            .send({
+                email: 'testadmin@example.com',
+                password: 'adminpassword123',
+            });
+
+        accessToken = loginResponse.body.accessToken;
+    });
+
+    test('Create a new user successfully', async () => {
+        const response = await request(app)
+            .post('/users')
+            .set('Authorization', `Bearer ${accessToken}`)
+            .send({
+                username: 'NewUser',
+                email: 'newuser@example.com',
+                password: 'password123',
+            });
+
+        expect(response.status).toBe(201);
+        expect(response.body).toHaveProperty('id');
+        expect(response.body.username).toBe('NewUser');
+        expect(response.body.email).toBe('newuser@example.com');
+    });
+
+    test('Fail to create a user with missing fields', async () => {
+        const response = await request(app)
+            .post('/users')
+            .set('Authorization', `Bearer ${accessToken}`)
+            .send({
+                username: 'IncompleteUser',
+            });
+
+        expect(response.status).toBe(400);
+        expect(response.body.message).toBe('Validation failed');
+    });
+
+    test('Fail to create a user with invalid email', async () => {
+        const response = await request(app)
+            .post('/users')
+            .set('Authorization', `Bearer ${accessToken}`)
+            .send({
+                username: 'InvalidEmailUser',
+                email: 'invalid-email',
+                password: 'password123',
+            });
+
+        expect(response.status).toBe(400);
+        expect(response.body.message).toBe('Validation failed');
     });
 });

@@ -1,6 +1,12 @@
 import express, { Request, Response, Router } from 'express';
 import * as postsController from '../controllers/posts_controller';
 import {CustomRequest} from "types/customRequest";
+import {
+    handleValidationErrors,
+    validatePostData,
+    validatePostDataOptional,
+    validatePostIdParam
+} from "../middleware/validation";
 
 const router: Router = express.Router();
 
@@ -58,7 +64,7 @@ const router: Router = express.Router();
  *       400:
  *         description: Validation error
  */
-router.post('/', (req: Request, res: Response) => postsController.addPost(req as CustomRequest, res));
+router.post('/', validatePostData, handleValidationErrors, (req: Request, res: Response) => postsController.addPost(req as CustomRequest, res));
 
 
 /**
@@ -154,7 +160,7 @@ router.get('/', (req: Request, res: Response) => postsController.getPosts(req, r
  *       400:
  *         description: Invalid post ID
  */
-router.get('/:post_id', (req: Request, res: Response) => postsController.getPostById(req, res));
+router.get('/:post_id', validatePostIdParam, handleValidationErrors,(req: Request, res: Response) => postsController.getPostById(req, res));
 
 /**
  * @swagger
@@ -218,7 +224,7 @@ router.get('/:post_id', (req: Request, res: Response) => postsController.getPost
  *       404:
  *         description: Post not found
  */
-router.put('/:post_id', (req: Request, res: Response) => postsController.updatePost(req as CustomRequest, res));
+router.put('/:post_id', validatePostIdParam, validatePostDataOptional, handleValidationErrors, (req: Request, res: Response) => postsController.updatePost(req as CustomRequest, res));
 
 /**
  * @swagger
@@ -282,6 +288,8 @@ router.put('/:post_id', (req: Request, res: Response) => postsController.updateP
  *       404:
  *         description: Post not found
  */
-router.patch('/:post_id', (req: Request, res: Response) => postsController.updatePost(req as CustomRequest, res));
+router.patch('/:post_id', validatePostIdParam, validatePostDataOptional, handleValidationErrors, (req: Request, res: Response) => postsController.updatePost(req as CustomRequest, res));
+//TODO ---  are these two PATCH and PUT methods correct? I think they should be different, but I'm not sure how to fix them
+
 
 export default router;
