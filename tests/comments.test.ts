@@ -1,9 +1,9 @@
 import request from 'supertest';
-import app from '../app';
+import app from '../src/app';
 import mongoose, { ConnectOptions, Types } from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import { PostModel } from '../models/posts_model';
-import { CommentModel } from '../models/comments_model';
+import { PostModel } from '../src/models/posts_model';
+import { CommentModel } from '../src/models/comments_model';
 
 let mongoServer: MongoMemoryServer;
 

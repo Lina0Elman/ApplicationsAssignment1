@@ -1,8 +1,8 @@
 import request from 'supertest';
-import app from '../app';
+import app from '../src/app';
 import mongoose, { ConnectOptions } from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import { UserModel } from '../models/user_model';
+import { UserModel } from '../src/models/user_model';
 
 let mongoServer: MongoMemoryServer;
 
