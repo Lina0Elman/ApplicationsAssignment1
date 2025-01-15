@@ -8,6 +8,7 @@ export default {
     },
     auth: {
         access_token: process.env.ACCESS_TOKEN_SECRET || 'lala',
-        salt: process.env.SALT || 10
+        salt: process.env.SALT || 10,
+        refresh_token: process.env.REFRESH_TOKEN || 'hi'
     }
 };

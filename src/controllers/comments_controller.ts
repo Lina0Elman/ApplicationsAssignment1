@@ -21,6 +21,22 @@ export const addComment = async (req: Request, res: Response): Promise<void> => 
     }
 };
 
+
+export const getCommentById = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const comment = await commentsService.getCommentById(req.params.comment_id);
+        if (comment == null) {
+            res.status(204).json({ message: 'No comments found for this post' });
+        } else {
+            res.json(comment);
+        }
+    } catch (err) {
+        handleError(err, res);
+    }
+};
+
+
+
 export const getCommentsByPostId = async (req: Request, res: Response): Promise<void> => {
     try {
         const comments = await commentsService.getCommentsByPostId(req.params.post_id);

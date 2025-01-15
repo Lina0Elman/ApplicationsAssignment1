@@ -1,5 +1,6 @@
 import express, { Request, Response, Router } from 'express';
 import * as postsController from '../controllers/posts_controller';
+import {CustomRequest} from "types/customRequest";
 
 const router: Router = express.Router();
 
@@ -10,6 +11,8 @@ const router: Router = express.Router();
  *     summary: Add a new post
  *     tags:
  *       - Posts
+ *     security:
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -24,12 +27,39 @@ const router: Router = express.Router();
  *                 type: string
  *                 description: The content of the post
  *     responses:
+ *     responses:
  *       201:
  *         description: Post created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: The post ID
+ *                 title:
+ *                   type: string
+ *                   description: The title of the post
+ *                 content:
+ *                   type: string
+ *                   description: The content of the post
+ *                 owner:
+ *                   type: string
+ *                   description: The ID of the user who owns the post
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Timestamp when the post was created
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Timestamp when the post was last updated
  *       400:
  *         description: Validation error
  */
-router.post('/', (req: Request, res: Response) => postsController.addPost(req, res));
+router.post('/', (req: Request, res: Response) => postsController.addPost(req as CustomRequest, res));
+
 
 /**
  * @swagger
@@ -38,6 +68,8 @@ router.post('/', (req: Request, res: Response) => postsController.addPost(req, r
  *     summary: Get all posts
  *     tags:
  *       - Posts
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: List of all posts
@@ -57,6 +89,9 @@ router.post('/', (req: Request, res: Response) => postsController.addPost(req, r
  *                   content:
  *                     type: string
  *                     description: The content of the post
+ *                   owner:
+ *                     type: string
+ *                     description: The ID of the user who owns the post
  *                   createdAt:
  *                     type: string
  *                     format: date-time
@@ -65,6 +100,8 @@ router.post('/', (req: Request, res: Response) => postsController.addPost(req, r
  *                     type: string
  *                     format: date-time
  *                     description: Timestamp when the post was last updated
+ *       204:
+ *         description: No posts found
  */
 router.get('/', (req: Request, res: Response) => postsController.getPosts(req, res));
 
@@ -75,13 +112,15 @@ router.get('/', (req: Request, res: Response) => postsController.getPosts(req, r
  *     summary: Get a post by ID
  *     tags:
  *       - Posts
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: post_id
  *         required: true
  *         schema:
  *           type: string
- *         description: The ID of the post
+ *         description: The ID of the post to get
  *     responses:
  *       200:
  *         description: The post data
@@ -99,6 +138,9 @@ router.get('/', (req: Request, res: Response) => postsController.getPosts(req, r
  *                 content:
  *                   type: string
  *                   description: The content of the post
+ *                 owner:
+ *                   type: string
+ *                   description: The ID of the user who owns the post
  *                 createdAt:
  *                   type: string
  *                   format: date-time
@@ -121,6 +163,8 @@ router.get('/:post_id', (req: Request, res: Response) => postsController.getPost
  *     summary: Update a post
  *     tags:
  *       - Posts
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: post_id
@@ -137,27 +181,54 @@ router.get('/:post_id', (req: Request, res: Response) => postsController.getPost
  *             properties:
  *               title:
  *                 type: string
- *                 description: The updated title of the post
+ *                 description: The title of the post
  *               content:
  *                 type: string
- *                 description: The updated content of the post
+ *                 description: The content of the post
  *     responses:
  *       200:
  *         description: Post updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: The post ID
+ *                 title:
+ *                   type: string
+ *                   description: The title of the post
+ *                 content:
+ *                   type: string
+ *                   description: The content of the post
+ *                 owner:
+ *                   type: string
+ *                   description: The ID of the user who owns the post
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Timestamp when the post was created
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Timestamp when the post was last updated
  *       400:
  *         description: Validation error
  *       404:
  *         description: Post not found
  */
-router.put('/:post_id', (req: Request, res: Response) => postsController.updatePost(req, res));
+router.put('/:post_id', (req: Request, res: Response) => postsController.updatePost(req as CustomRequest, res));
 
 /**
  * @swagger
  * /posts/{post_id}:
- *   patch:
- *     summary: Partially update a post
+ *   put:
+ *     summary: Update a post
  *     tags:
  *       - Posts
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: post_id
@@ -174,18 +245,43 @@ router.put('/:post_id', (req: Request, res: Response) => postsController.updateP
  *             properties:
  *               title:
  *                 type: string
- *                 description: The updated title of the post
+ *                 description: The title of the post
  *               content:
  *                 type: string
- *                 description: The updated content of the post
+ *                 description: The content of the post
  *     responses:
  *       200:
  *         description: Post updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: The post ID
+ *                 title:
+ *                   type: string
+ *                   description: The title of the post
+ *                 content:
+ *                   type: string
+ *                   description: The content of the post
+ *                 owner:
+ *                   type: string
+ *                   description: The ID of the user who owns the post
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Timestamp when the post was created
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Timestamp when the post was last updated
  *       400:
  *         description: Validation error
  *       404:
  *         description: Post not found
  */
-router.patch('/:post_id', (req: Request, res: Response) => postsController.updatePost(req, res));
+router.patch('/:post_id', (req: Request, res: Response) => postsController.updatePost(req as CustomRequest, res));
 
 export default router;

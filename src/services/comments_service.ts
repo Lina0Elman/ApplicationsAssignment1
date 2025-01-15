@@ -1,7 +1,5 @@
 import {CommentModel } from '../models/comments_model';
-import { IComment } from './comment_types';
-import { CommentData } from 'types/comment_data';
-
+import { IComment, CommentData } from '../types/comment_types';
 
 export const addComment = async (commentData: CommentData): Promise<IComment> => {
     const comment = new CommentModel(commentData);
@@ -28,4 +26,8 @@ export const updateComment = async (commentId: string, commentData: Partial<Comm
 
 export const deleteComment = async (commentId: string): Promise<IComment | null> => {
     return await CommentModel.findByIdAndDelete(commentId).exec();
+};
+
+export const getCommentById = async (commentId: string): Promise<IComment | null> => {
+    return await CommentModel.findById(commentId).exec();
 };

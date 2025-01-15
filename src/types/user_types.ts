@@ -5,3 +5,14 @@ export interface IUser extends Document {
     email: string;
     password: string;
 }
+
+
+export interface UserData {
+    id: string;
+    username: string;
+    email: string;
+    createdAt?: string,
+    updatedAt?: string,
+}
+
+

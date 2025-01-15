@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import { IPost } from '../services/post_types';
+import {IPost, PostData} from 'types/post_types';
 
 const postSchema: Schema = new mongoose.Schema({
     title: {
@@ -12,15 +12,18 @@ const postSchema: Schema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-}, { strict: true });
+}, {  timestamps: true, strict: true });
 
 postSchema.set('toJSON', {
-    transform: (doc: Document, ret: Record<string, any>) => {
+    transform: (doc: Document, ret: Record<string, any>): PostData => {
         return {
             id: ret._id,
             title: ret.title,
             content: ret.content,
-            owner: ret.owner
+            owner: ret.owner._id.toString(),
+            createdAt: ret.createdAt,
+            updatedAt: ret.updatedAt
+
         };
     }
 });

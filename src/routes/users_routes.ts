@@ -3,33 +3,6 @@ import * as usersController from '../controllers/users_controller';
 
 const router: Router = express.Router();
 
-/**
- * @swagger
- * /users:
- *   post:
- *     summary: Add a new user
- *     tags:
- *       - Users
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               username:
- *                 type: string
- *                 description: The username of the user
- *               email:
- *                 type: string
- *                 description: The email of the user
- *     responses:
- *       201:
- *         description: User created successfully
- *       400:
- *         description: Validation error
- */
-router.post('/', (req: Request, res: Response) => usersController.addUser(req, res));
 
 /**
  * @swagger
@@ -38,6 +11,8 @@ router.post('/', (req: Request, res: Response) => usersController.addUser(req, r
  *     summary: Get all users
  *     tags:
  *       - Users
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: List of all users
@@ -57,15 +32,15 @@ router.post('/', (req: Request, res: Response) => usersController.addUser(req, r
  *                   email:
  *                     type: string
  *                     description: The email of the user
- *                   createdAt:
- *                     type: string
- *                     format: date-time
- *                     description: Timestamp when the user was created
- *                   updatedAt:
- *                     type: string
- *                     format: date-time
- *                     description: Timestamp when the user was last updated
  */
 router.get('/', (req: Request, res: Response) => usersController.getUsers(req, res));
+
+
+
+router.get('/:id', (req: Request, res: Response) => usersController.getUserById(req, res));
+
+router.delete('/:id', (req: Request, res: Response) => usersController.deleteUserById(req, res));
+
+router.put('/:id', (req: Request, res: Response) => usersController.updateUserById(req, res));
 
 export default router;

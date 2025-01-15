@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import { IComment } from '../services/comment_types';
+import { IComment } from '../types/comment_types';
 
 
 const commentSchema: Schema = new mongoose.Schema({
@@ -12,13 +12,12 @@ const commentSchema: Schema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    // TODO - Connect to a user model
     author: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: "User"
     },
-}, { timestamps: true });
+}, { timestamps: true, strict: true });
 
 commentSchema.set('toJSON', {
     transform: (doc: Document, ret: Record<string, any>) => {

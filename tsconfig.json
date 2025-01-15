@@ -7,13 +7,13 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": ".",
     "baseUrl": ".",
     "paths": {
       "*": ["node_modules/*"],
       "types/*": ["src/types/*"]
     }
   },
-  "include": ["src/**/*.ts", "index.ts", "src/*.ts"],
+  "include": ["src/**/*.ts", "index.ts", "src/*.ts", "src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

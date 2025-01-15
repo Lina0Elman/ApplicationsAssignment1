@@ -1,9 +1,27 @@
-import { Request, Response, NextFunction } from 'express';
+// auth.ts
+import {Response, NextFunction, RequestHandler} from 'express';
 import jwt from 'jsonwebtoken';
 import config from '../config/config';
+import { CustomRequest } from 'types/customRequest';
+import {unless} from 'express-unless';
+import {UserData} from "types/user_types";
+import * as usersService from '../services/users_service';
 
-// Middleware to authenticate token for all requests except for addUser (registration)
-const authenticateToken = (req: Request, res: Response, next: NextFunction): void => {
+
+// Middleware to authenticate token for all requests
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *
+ * security:
+ *   - BearerAuth: []
+ */
+const authenticateToken: any & { unless: typeof unless } = async (req: CustomRequest, res: Response, next: NextFunction): Promise<void> => {
   const token = req.headers['authorization']?.split(' ')[1];
 
   if (!token) {
@@ -11,14 +29,23 @@ const authenticateToken = (req: Request, res: Response, next: NextFunction): voi
     return;
   }
 
-  jwt.verify(token, config.auth.access_token, (err, user) => {
-    if (err) {
+  try {
+    const decoded = jwt.verify(token, config.auth.access_token) as jwt.JwtPayload;
+    const user = await usersService.getUserById(decoded.userId);
+
+    if (!user) {
       res.status(403).json({ message: 'Invalid token' });
       return;
     }
+
     req.user = user;
     next();
-  });
+
+  } catch (err) {
+    res.status(403).json({ message: 'Invalid token' });
+  }
 };
 
-export { authenticateToken };
+authenticateToken.unless = unless;
+
+export default authenticateToken;
