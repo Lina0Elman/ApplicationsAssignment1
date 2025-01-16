@@ -81,3 +81,17 @@ export const updatePost = async (req: CustomRequest, res: Response): Promise<voi
         handleError(err, res);
     }
 };
+
+
+export const deletePostById = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const post = await postsService.getPostById(req.params.post_id);
+        if (!post) {
+            res.status(404).json({ message: 'Post not found' });
+        } else {
+            res.json({ message: 'Post deleted successfully' });
+        }
+    } catch (err) {
+        handleError(err, res);
+    }
+};

@@ -41,6 +41,17 @@ export const getPostById = async (postId: string): Promise<PostData | null> => {
     return post ? postToPostData(post) : null;
 };
 
+
+/**
+ * Delete a post by ID
+ * @param postId
+ */
+export const deletePostById = async (postId: string): Promise<PostData | null> => {
+    const deletedPost = await PostModel.findByIdAndDelete(postId).exec();
+    return deletedPost ? postToPostData(deletedPost) : null;
+};
+
+
 /**
  * Update a post
  * @param postId

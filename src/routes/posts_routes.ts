@@ -289,7 +289,38 @@ router.put('/:post_id', validatePostIdParam, validatePostDataOptional, handleVal
  *         description: Post not found
  */
 router.patch('/:post_id', validatePostIdParam, validatePostDataOptional, handleValidationErrors, (req: Request, res: Response) => postsController.updatePost(req as CustomRequest, res));
-//TODO ---  are these two PATCH and PUT methods correct? I think they should be different, but I'm not sure how to fix them
+
+/**
+ * @swagger
+ * /posts/{postId}:
+ *   delete:
+ *     summary: Delete a post
+ *     tags:
+ *       - Posts
+ *     parameters:
+ *       - in: path
+ *         name: postId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the post to delete
+ *     responses:
+ *       200:
+ *         description: Post deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Success message
+ *       404:
+ *         description: Post not found
+ *       500:
+ *         description: Internal server error
+ */
+router.delete('/:post_id', validatePostIdParam, handleValidationErrors, (req: Request, res: Response) => postsController.deletePostById(req as CustomRequest, res));
 
 
 export default router;
