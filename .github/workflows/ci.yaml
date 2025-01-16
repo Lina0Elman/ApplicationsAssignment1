@@ -2,14 +2,17 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
+    branches: ['*']
   pull_request:
-    branches:
-      - main
+    branches: ['*']
+  workflow_dispatch:
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     services:
@@ -23,18 +26,14 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x]
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Set up Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18
 
       - name: Install dependencies
         run: npm install
@@ -42,7 +41,7 @@ jobs:
       - name: Wait for MongoDB to be ready
         run: |
           for i in {1..10}; do
-            if mongo --eval "db.runCommand({ ping: 1 })" mongodb://localhost:27017/test; then
+            if mongosh --eval "db.adminCommand({ ping: 1 })" mongodb://localhost:27017/test; then
               echo "MongoDB is ready"
               exit 0
             fi
@@ -55,7 +54,7 @@ jobs:
       - name: Run tests
         env:
           MONGO_URI: mongodb://localhost:27017/test
-        run: npm test -- --coverage
+        run: npm test -- --coverage --testTimeout=30000
 
       - name: List test result files
         run: ls -al ./coverage && ls -al ./reports/junit
@@ -66,8 +65,18 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: ./coverage/lcov.info
 
-      - name: Upload test results
-        uses: actions/upload-artifact@v3
+      - name: Setup Pages
+        if: always()
+        uses: actions/configure-pages@v4
+
+      - name: Upload Artifact
+        if: always()
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: junit-test-results
-          path: reports/junit/js-test-results.xml
+          path: './coverage/lcov-report'
+          name: 'github-pages'
+
+      - name: Deploy to GitHub Pages
+        if: always()
+        id: deployment
+        uses: actions/deploy-pages@v4
