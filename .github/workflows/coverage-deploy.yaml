@@ -1,11 +1,10 @@
 name: Deploy coverage report to Pages
 
 on:
- push:
+  push:
     branches: ['*']
   pull_request:
     branches: ['*']
-
   workflow_dispatch:
 
 concurrency:
@@ -38,7 +37,7 @@ jobs:
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.10.0
         with:
-          mongodb-version: '6.0'       
+          mongodb-version: '6.0'
       - uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -48,13 +47,13 @@ jobs:
         run: npm run test -- --testTimeout=30000
       - name: Setup Pages
         if: always()
-        uses: actions/configure-pages@v4      
+        uses: actions/configure-pages@v4
       - name: Upload Artifact
         if: always()
         uses: actions/upload-pages-artifact@v3
         with:
           path: 'coverage/lcov-report'
-          name: 'github-pages'      
+          name: 'github-pages'
       - name: Deploy to GitHub Pages
         if: always()
         id: deployment
