@@ -229,8 +229,8 @@ router.put('/:post_id', validatePostIdParam, validatePostDataOptional, handleVal
 /**
  * @swagger
  * /posts/{post_id}:
- *   put:
- *     summary: Update a post
+ *   patch:
+ *     summary: Update a post parameters
  *     tags:
  *       - Posts
  *     security:

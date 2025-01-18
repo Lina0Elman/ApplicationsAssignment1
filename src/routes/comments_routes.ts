@@ -79,6 +79,35 @@ router.get('/', (req: Request, res: Response) => commentsController.getAllCommen
  *         description: Invalid post ID
  */
 router.get('/:post_id', (req: Request, res: Response) => commentsController.getCommentsByPostId(req, res));
+
+/**
+ * @swagger
+ * /comments/{commentId}:
+ *   get:
+ *     summary: Get a comment by ID
+ *     tags:
+ *       - Comments
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: commentId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the comment to get
+ *     responses:
+ *       200:
+ *         description: The comment data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Comment'
+ *       404:
+ *         description: Comment not found
+ *       400:
+ *         description: Invalid comment ID
+ */
 router.get('/:commentId', (req: Request, res: Response) => commentsController.getCommentById(req, res));
 
 /**

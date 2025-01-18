@@ -1,5 +1,5 @@
 {
-  "name": "applicationsassignment1",
+  "name": "applications-assignment",
   "version": "1.0.0",
   "description": "Rest API integrated with mongo",
   "main": "index.ts",
