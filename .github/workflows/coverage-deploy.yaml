@@ -1,8 +1,10 @@
 name: Deploy coverage report to Pages
 
 on:
-  push:
-    branches: ['main']
+ push:
+    branches: ['*']
+  pull_request:
+    branches: ['*']
 
   workflow_dispatch:
 
