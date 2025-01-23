@@ -1,6 +1,7 @@
 {
   "name": "applicationsassignment1",
   "version": "1.0.0",
+  "author": "Liav-Tibi-207351271-Lina-Elman-323838961",
   "description": "Rest API integrated with mongo",
   "main": "index.js",
   "scripts": {
@@ -13,7 +14,6 @@
     "type": "git",
     "url": "git+https://github.com/Lina0Elman/ApplicationsAssignment1.git"
   },
-  "author": "Liav & Lina",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Lina0Elman/ApplicationsAssignment1/issues"
