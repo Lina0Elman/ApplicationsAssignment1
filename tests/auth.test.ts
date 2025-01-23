@@ -292,6 +292,23 @@ describe('Auth API Tests', () => {
         expect(tokenCheckResponse).toBeNull();
     });
 
+    test('Access protected route without token', async () => {
+        const response = await request(app)
+            .get('/protected-route');
+
+        expect(response.status).toBe(401);
+        expect(response.body.message).toBe('Access token required');
+    });
+
+    test('Access protected route with invalid token', async () => {
+        const response = await request(app)
+            .get('/protected-route')
+            .set('Authorization', 'Bearer invalidtoken');
+
+        expect(response.status).toBe(403);
+        expect(response.body.message).toBe('Invalid token');
+    });
+
     test('Attempt to perform action with blacklisted access token', async () => {
         // Register a new user
         const registerResponse = await request(app)

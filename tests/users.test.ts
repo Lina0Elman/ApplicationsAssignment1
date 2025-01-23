@@ -22,6 +22,9 @@ afterAll(async () => {
 
 describe('Users API Tests', () => {
 
+    let userId: string;
+    let accessToken: string;
+
     beforeEach(async () => {
         // Clean the database before each test
         await mongoose.connection.db?.dropDatabase();
@@ -38,6 +41,7 @@ describe('Users API Tests', () => {
 
         expect(response.status).toBe(201);
         expect(response.body).toHaveProperty('id');
+        userId = response.body.id;
     });
 
     test('Login a user', async () => {
@@ -59,6 +63,15 @@ describe('Users API Tests', () => {
         expect(response.status).toBe(200);
         expect(response.body).toHaveProperty('accessToken');
         expect(response.body).toHaveProperty('refreshToken');
+        accessToken = response.body.accessToken;
+    });
+
+    test('Get a user without authorization', async () => {
+        const response = await request(app)
+            .get(`/users/${userId}`);
+
+        expect(response.status).toBe(401);
+        expect(response.body.message).toBe('Access token required');
     });
 
     test('Fail to login with invalid credentials', async () => {
@@ -200,6 +213,17 @@ describe('Create User API Tests', () => {
         expect(response.body.message).toBe('Validation failed');
     });
 
+    test('Update a non-existent user', async () => {
+        const response = await request(app)
+            .put('/users/60c72b2f9b1d8b3a4c8e4d2b')
+            .set('Authorization', `Bearer ${accessToken}`)
+            .send({ username: 'nonexistentuser' });
+
+        expect(response.status).toBe(404);
+        expect(response.body.message).toBe('User not found');
+    });
+
+    
     test('Fail to create a user with invalid email', async () => {
         const response = await request(app)
             .post('/users')
