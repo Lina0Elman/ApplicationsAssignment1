@@ -129,4 +129,30 @@ describe('Comments API Tests', () => {
         expect(response.status).toBe(200);
         expect(response.body.message).toBe('Comment deleted successfully');
     });
+
+
+    test('Delete a non-existent comment', async () => {
+        const response = await request(app)
+            .delete('/comments/60c72b2f9b1d8b3a4c8e4d2b')
+            .set('Authorization', `Bearer ${accessToken}`);
+
+        expect(response.status).toBe(404);
+        expect(response.body.message).toBe('Comment not found');
+    });
+
+
+    test('Delete a comment with invalid authorization', async () => {
+        const comment = await CommentModel.create({
+            postId: postId,
+            content: 'This is yet another comment',
+            author: userId,
+        });
+
+        const response = await request(app)
+            .delete(`/comments/${comment._id}`)
+            .set('Authorization', 'Bearer invalidtoken');
+
+        expect(response.status).toBe(403);
+        expect(response.body.message).toBe('Invalid token');
+    });
 });

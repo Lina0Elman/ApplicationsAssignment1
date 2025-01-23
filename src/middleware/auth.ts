@@ -30,6 +30,12 @@ const authenticateToken: any & { unless: typeof unless } = async (req: CustomReq
   }
 
   try {
+    const isBlacklisted = await usersService.isAccessTokenBlacklisted(token);
+    if (isBlacklisted) {
+      res.status(403).json({ message: 'Token is blacklisted' });
+      return;
+    }
+
     const decoded = jwt.verify(token, config.auth.access_token) as jwt.JwtPayload;
     const user = await usersService.getUserById(decoded.userId);
 
