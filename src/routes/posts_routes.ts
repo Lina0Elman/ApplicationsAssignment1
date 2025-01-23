@@ -33,7 +33,6 @@ const router: Router = express.Router();
  *                 type: string
  *                 description: The content of the post
  *     responses:
- *     responses:
  *       201:
  *         description: Post created successfully
  *         content:

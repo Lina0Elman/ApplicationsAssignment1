@@ -6,6 +6,7 @@ import {
     validateRefreshToken,
     validateUserRegister
 } from "../middleware/validation";
+import {CustomRequest} from "types/customRequest";
 
 const router: Router = express.Router();
 
@@ -29,7 +30,7 @@ const router: Router = express.Router();
  *               password:
  *                 type: string
  *                 description: The password of the user
- *     responses:
+ *   responses:
  *       200:
  *         description: User logged in successfully
  *         content:
@@ -75,7 +76,7 @@ router.post('/login', validateLogin, handleValidationErrors, (req: Request, res:
  *       400:
  *         description: Validation error
  */
-router.post('/logout', (req: Request, res: Response) => authController.logoutUser(req, res));
+router.post('/logout', (req: Request, res: Response) => authController.logoutUser(req as CustomRequest, res));
 
 /**
  * @swagger
@@ -108,9 +109,23 @@ router.post('/logout', (req: Request, res: Response) => authController.logoutUse
  *             schema:
  *               type: object
  *               properties:
- *                 message:
+ *                 id:
  *                   type: string
- *                   description: Success message
+ *                   description: The ID of the user
+ *                 username:
+ *                   type: string
+ *                   description: The username of the user
+ *                 email:
+ *                   type: string
+ *                   description: The email of the user
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                   description: The creation date of the user
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ *                   description: The last update date of the user
  *       400:
  *         description: Validation error
  */
