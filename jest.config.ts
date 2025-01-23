@@ -201,7 +201,19 @@ const config: Config.InitialOptions = {
 
   preset: 'ts-jest',
   testEnvironment: 'node',
-  
+  collectCoverage: true,
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov'],
+  reporters: [
+    'default',
+    [
+        'jest-junit',
+        {
+            outputDirectory: 'reports/junit',
+            outputName: 'js-test-results.xml',
+        },
+    ],
+  ],
   testTimeout: 10000,
   testMatch: ["**/?(*.)+(spec|test).ts"]
 };

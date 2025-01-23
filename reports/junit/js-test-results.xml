@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="19" failures="0" errors="0" time="13.12">
+  <testsuite name="Posts API Tests" errors="0" failures="0" skipped="0" timestamp="2025-01-16T08:16:35" time="7.112" tests="5">
+    <testcase classname="Posts API Tests Create a new post" name="Posts API Tests Create a new post" time="0.337">
+    </testcase>
+    <testcase classname="Posts API Tests Get all posts" name="Posts API Tests Get all posts" time="0.23">
+    </testcase>
+    <testcase classname="Posts API Tests Get a post by ID" name="Posts API Tests Get a post by ID" time="0.212">
+    </testcase>
+    <testcase classname="Posts API Tests Update a post" name="Posts API Tests Update a post" time="0.242">
+    </testcase>
+    <testcase classname="Posts API Tests Delete a post" name="Posts API Tests Delete a post" time="0.227">
+    </testcase>
+  </testsuite>
+  <testsuite name="Comments API Tests" errors="0" failures="0" skipped="0" timestamp="2025-01-16T08:16:43" time="2.685" tests="5">
+    <testcase classname="Comments API Tests Add a comment to a valid post" name="Comments API Tests Add a comment to a valid post" time="0.224">
+    </testcase>
+    <testcase classname="Comments API Tests Get all comments for a post" name="Comments API Tests Get all comments for a post" time="0.216">
+    </testcase>
+    <testcase classname="Comments API Tests Get a comment by ID" name="Comments API Tests Get a comment by ID" time="0.227">
+    </testcase>
+    <testcase classname="Comments API Tests Update an existing comment" name="Comments API Tests Update an existing comment" time="0.24">
+    </testcase>
+    <testcase classname="Comments API Tests Delete a comment" name="Comments API Tests Delete a comment" time="0.237">
+    </testcase>
+  </testsuite>
+  <testsuite name="Users API Tests" errors="0" failures="0" skipped="0" timestamp="2025-01-16T08:16:45" time="2.993" tests="9">
+    <testcase classname="Users API Tests Register a new user" name="Users API Tests Register a new user" time="0.12">
+    </testcase>
+    <testcase classname="Users API Tests Login a user" name="Users API Tests Login a user" time="0.202">
+    </testcase>
+    <testcase classname="Users API Tests Fail to login with invalid credentials" name="Users API Tests Fail to login with invalid credentials" time="0.01">
+    </testcase>
+    <testcase classname="Users API Tests Get user details" name="Users API Tests Get user details" time="0.237">
+    </testcase>
+    <testcase classname="Users API Tests Update user details" name="Users API Tests Update user details" time="0.248">
+    </testcase>
+    <testcase classname="Users API Tests Delete user" name="Users API Tests Delete user" time="0.242">
+    </testcase>
+    <testcase classname="Create User API Tests Create a new user successfully" name="Create User API Tests Create a new user successfully" time="0.098">
+    </testcase>
+    <testcase classname="Create User API Tests Fail to create a user with missing fields" name="Create User API Tests Fail to create a user with missing fields" time="0.009">
+    </testcase>
+    <testcase classname="Create User API Tests Fail to create a user with invalid email" name="Create User API Tests Fail to create a user with invalid email" time="0.008">
+    </testcase>
+  </testsuite>
+</testsuites>
