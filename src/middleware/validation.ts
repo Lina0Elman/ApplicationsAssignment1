@@ -61,7 +61,7 @@ export const validatePostData = [
 ];
 
 export const validatePostIdParam = [
-    param('id').isMongoId().withMessage('Invalid post ID'),
+    param('post_id').isMongoId().withMessage('Invalid post ID'),
 ];
 
 export const handleValidationErrors = (req: Request, res: Response, next: NextFunction) => {
